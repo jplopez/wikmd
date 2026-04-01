@@ -1,0 +1,76 @@
+[2026-03-31 19:49:30,779] INFO in image_manager: Checking if webp is available for image optimization ...
+'cwebp' is not recognized as an internal or external command,
+operable program or batch file.
+[2026-03-31 19:49:30,797] INFO in wiki: Starting Wikmd with wiki directory C:\Users\Juan Pablo Lopez\wikmd\wiki
+[2026-03-31 19:49:30,797] INFO in wiki: Wiki directory doesn't exists, copy template
+[2026-03-31 19:49:30,800] INFO in wiki: Creating upload folder >>> wiki/img
+[2026-03-31 19:49:30,801] INFO in git_manager: Creating a new local repo >>> wiki ...
+[2026-03-31 19:49:30,847] INFO in git_manager: Creating 'main' branch ...
+[2026-03-31 19:49:30,948] INFO in git_manager: New git commit >>> First init commit
+[2026-03-31 19:49:31,000] INFO in wiki: Search index creation...
+[2026-03-31 19:49:31,206] INFO in wiki: Spawning search indexer watchdog
+[2026-03-31 19:49:32,056] INFO in image_manager: Checking if webp is available for image optimization ...
+'cwebp' is not recognized as an internal or external command,
+operable program or batch file.
+[2026-03-31 19:49:43,583] INFO in wiki: Showing HTML page >>> 'homepage'
+[2026-03-31 19:49:43,588] INFO in wiki: Plug/plantuml - process_md_before_html_convert >>> homepage
+[2026-03-31 19:49:43,588] INFO in wiki: Converting to HTML with pandoc >>> 'wiki/homepage.md' ...
+[2026-03-31 19:49:43,776] INFO in wiki: Plug/Alerts system - process_before_cache_html >>> homepage
+[2026-03-31 19:49:43,787] INFO in wiki: Plug/DrawIO integration - process_html >>> homepage
+[2026-03-31 19:49:43,787] INFO in wiki: Plug/embed-pages - process_html >>> homepage
+[2026-03-31 19:49:43,787] INFO in wiki: Plug/swagger - process_html >>> homepage
+[2026-03-31 19:49:43,788] INFO in wiki: Plug/plantuml - process_html >>> homepage
+[2026-03-31 19:49:43,788] INFO in wiki: Showing HTML page >>> 'homepage'
+[2026-03-31 19:51:47,293] INFO in wiki: Showing HTML page >>> 'homepage'
+[2026-03-31 19:51:47,318] INFO in wiki: Showing HTML page from cache >>> 'homepage'
+[2026-03-31 19:51:47,319] INFO in wiki: Plug/DrawIO integration - process_html >>> homepage
+[2026-03-31 19:51:47,319] INFO in wiki: Plug/embed-pages - process_html >>> homepage
+[2026-03-31 19:51:47,319] INFO in wiki: Plug/swagger - process_html >>> homepage
+[2026-03-31 19:51:47,319] INFO in wiki: Plug/plantuml - process_html >>> homepage
+[2026-03-31 19:52:41,369] INFO in wiki: Showing HTML page >>> 'homepage'
+[2026-03-31 19:52:41,373] INFO in wiki: Showing HTML page from cache >>> 'homepage'
+[2026-03-31 19:52:41,374] INFO in wiki: Plug/DrawIO integration - process_html >>> homepage
+[2026-03-31 19:52:41,374] INFO in wiki: Plug/embed-pages - process_html >>> homepage
+[2026-03-31 19:52:41,374] INFO in wiki: Plug/swagger - process_html >>> homepage
+[2026-03-31 19:52:41,374] INFO in wiki: Plug/plantuml - process_html >>> homepage
+[2026-03-31 19:52:43,917] INFO in wiki: Showing HTML page >>> 'homepage'
+[2026-03-31 19:52:43,978] INFO in wiki: Showing HTML page from cache >>> 'homepage'
+[2026-03-31 19:52:43,978] INFO in wiki: Plug/DrawIO integration - process_html >>> homepage
+[2026-03-31 19:52:43,978] INFO in wiki: Plug/embed-pages - process_html >>> homepage
+[2026-03-31 19:52:43,978] INFO in wiki: Plug/swagger - process_html >>> homepage
+[2026-03-31 19:52:43,979] INFO in wiki: Plug/plantuml - process_html >>> homepage
+[2026-03-31 19:53:11,326] INFO in wiki: Plug/DrawIO integration - process_md >>> Andeen
+[2026-03-31 19:53:11,332] WARNING in draw: DrawIO folder does not exist yet. Trying to create it now.
+[2026-03-31 19:53:11,335] INFO in wiki: Plug/embed-pages - process_md >>> Andeen
+[2026-03-31 19:53:11,335] INFO in wiki: Plug/swagger - process_md >>> Andeen
+[2026-03-31 19:53:11,335] INFO in wiki: Plug/plantuml - process_md >>> Andeen
+[2026-03-31 19:53:11,335] INFO in wiki: Saving >>> 'Andeen' ...
+[2026-03-31 19:53:11,341] INFO in wiki: Plug/plantuml - process_md_before_html_convert >>> Andeen
+[2026-03-31 19:53:11,341] INFO in wiki: Converting to HTML with pandoc >>> 'wiki/Andeen.md' ...
+[2026-03-31 19:53:11,404] INFO in wiki: Plug/Alerts system - process_before_cache_html >>> Andeen
+[2026-03-31 19:53:11,416] INFO in wiki: Plug/DrawIO integration - process_html >>> Andeen
+[2026-03-31 19:53:11,416] INFO in wiki: Plug/embed-pages - process_html >>> Andeen
+[2026-03-31 19:53:11,417] INFO in wiki: Plug/swagger - process_html >>> Andeen
+[2026-03-31 19:53:11,417] INFO in wiki: Plug/plantuml - process_html >>> Andeen
+[2026-03-31 19:53:11,417] INFO in wiki: Showing HTML page >>> 'Andeen'
+[2026-03-31 19:53:11,423] INFO in git_manager: New git commit >>> Add page 'Andeen' on 2026-03-31 19:53:11.336088
+[2026-03-31 19:57:10,326] INFO in wiki: Plug/DrawIO integration - process_md >>> Andeen
+[2026-03-31 19:57:10,330] INFO in wiki: Plug/embed-pages - process_md >>> Andeen
+[2026-03-31 19:57:10,331] INFO in wiki: Plug/swagger - process_md >>> Andeen
+[2026-03-31 19:57:10,331] INFO in wiki: Plug/plantuml - process_md >>> Andeen
+[2026-03-31 19:57:10,331] INFO in wiki: Saving >>> 'Andeen' ...
+[2026-03-31 19:57:10,427] INFO in git_manager: New git commit >>> Edit page 'Andeen' on 2026-03-31 19:57:10.333189
+[2026-03-31 19:57:10,639] INFO in wiki: Plug/plantuml - process_md_before_html_convert >>> Andeen
+[2026-03-31 19:57:10,639] INFO in wiki: Converting to HTML with pandoc >>> 'wiki/Andeen.md' ...
+[2026-03-31 19:57:10,703] INFO in wiki: Plug/Alerts system - process_before_cache_html >>> Andeen
+[2026-03-31 19:57:10,706] INFO in wiki: Plug/DrawIO integration - process_html >>> Andeen
+[2026-03-31 19:57:10,706] INFO in wiki: Plug/embed-pages - process_html >>> Andeen
+[2026-03-31 19:57:10,706] INFO in wiki: Plug/swagger - process_html >>> Andeen
+[2026-03-31 19:57:10,707] INFO in wiki: Plug/plantuml - process_html >>> Andeen
+[2026-03-31 19:57:10,707] INFO in wiki: Showing HTML page >>> 'Andeen'
+[2026-03-31 19:57:52,114] INFO in wiki: Showing HTML page >>> 'homepage'
+[2026-03-31 19:57:52,115] INFO in wiki: Showing HTML page from cache >>> 'homepage'
+[2026-03-31 19:57:52,115] INFO in wiki: Plug/DrawIO integration - process_html >>> homepage
+[2026-03-31 19:57:52,115] INFO in wiki: Plug/embed-pages - process_html >>> homepage
+[2026-03-31 19:57:52,116] INFO in wiki: Plug/swagger - process_html >>> homepage
+[2026-03-31 19:57:52,116] INFO in wiki: Plug/plantuml - process_html >>> homepage

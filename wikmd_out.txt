@@ -1,0 +1,8 @@
+DrawIO integration
+Alerts system
+Mermaid integration
+embed-pages
+swagger
+plantuml
+ * Serving Flask app 'wiki'
+ * Debug mode: on
