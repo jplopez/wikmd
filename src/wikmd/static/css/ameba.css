@@ -1,0 +1,190 @@
+.cmap {
+    background-image: url('/static/images/ameba/controller-mapping.png');
+    background-repeat: no-repeat;
+    display: inline-block;
+    vertical-align: middle;
+    --scale: 1.25;
+    --sprite-w: 200px;  /* total width of the sprite sheet */
+    --sprite-h: 260px;  /* total height of the sprite sheet */
+    --cmap-w: 40px;     /* default width of control mapping icon */
+    --cmap-h: 40px;     /* default height of control mapping icon */
+    --cmap-x: 0px;      /* x offset in the sprite, set by each icon class */
+    --cmap-y: 0px;      /* y offset in the sprite, set by each icon class */
+    background-size: calc(var(--sprite-w) * var(--scale)) calc(var(--sprite-h) * var(--scale));
+    background-position: calc(var(--cmap-x) * var(--scale)) calc(var(--cmap-y) * var(--scale));
+    width: calc(var(--cmap-w) * var(--scale));
+    height: calc(var(--cmap-h) * var(--scale));
+}
+
+.cmap-sm { --scale: 0.75; }
+.cmap-lg { --scale: 2; }
+
+/* Icon definitions: set offset variables only using default cmap size */
+/* button mappings are ordered by position: left,down,right,up */
+
+/* Generic (default) */
+.cmap.stick { --cmap-x: 0px; --cmap-y: -60px; }
+
+.cmap.stick.left { --cmap-x: 0px; --cmap-y: -20px; }
+.cmap.stick.down { --cmap-x: 0px; --cmap-y: -20px; transform: rotate(270deg); }
+.cmap.stick.right { --cmap-x: 0px; --cmap-y: -20px; transform: rotate(180deg); }
+.cmap.stick.up { --cmap-x: 0px; --cmap-y: -20px; transform: rotate(90deg);}
+
+.cmap.btn-y { --cmap-x: -40px; --cmap-y: -100px; }
+.cmap.btn-b { --cmap-x: -80px; --cmap-y: -100px; }
+.cmap.btn-a { --cmap-x: -120px; --cmap-y: -100px; }
+.cmap.btn-x { --cmap-x: -160px; --cmap-y: -100px; }
+
+.cmap.dir {
+    background-image: url('/static/images/ameba/ps-mapping.png');
+    background-repeat: no-repeat;
+    display: inline-block;
+    vertical-align: middle;
+    --scale: 0.9;
+    --sprite-w: 512px;  /* total width of the sprite sheet */
+    --sprite-h: 512px;  /* total height of the sprite sheet */
+    --cmap-w: 64px;     /* default width of control mapping icon */
+    --cmap-h: 64px;     /* default height of control mapping icon */
+    --cmap-x: -320px;      /* x offset in the sprite, set by each icon class */
+    --cmap-y: -192px;      /* y offset in the sprite, set by each icon class */
+}
+
+.cmap.dir.down { --cmap-x: -64px;  }
+.cmap.dir.left { --cmap-x: -128px; }
+.cmap.dir.right { --cmap-x: -192px;  }
+.cmap.dir.up { --cmap-x: -256px;  }
+.cmap.dir.all { --cmap-x: -384px;  }
+.cmap.dir.vertical { --cmap-x: -448px; }
+.cmap.dir.horizontal { --cmap-x: -448px; transform: rotate(90deg);}
+
+.cmap.arrow {
+    background-image: url('/static/images/ameba/ps-mapping.png');
+    background-repeat: no-repeat;
+    display: inline-block;
+    vertical-align: middle;
+    --scale: 0.9;
+    --sprite-w: 512px;  /* total width of the sprite sheet */
+    --sprite-h: 512px;  /* total height of the sprite sheet */
+    --cmap-w: 36px;     /* default width of control mapping icon */
+    --cmap-h: 64px;     /* default height of control mapping icon */
+    --cmap-x: 0px;      /* x offset in the sprite, set by each icon class */
+    --cmap-y: -448px;      /* y offset in the sprite, set by each icon class */
+}
+.cmap.arrow.left { --cmap-x: 0px; }
+.cmap.arrow.right { --cmap-x: -64px; }
+.cmap.arrow.down { --cmap-x: -126px; }
+.cmap.arrow.up { --cmap-x: -192px; }
+
+.cmap.arrow.upleft { --cmap-x: 0px;  transform: rotate(45deg); margin: 0px 5px 5px 0px; }
+.cmap.arrow.downright { --cmap-x: -64px; transform: rotate(45deg); margin: 5px 0px -5px 5px; }
+.cmap.arrow.downleft { --cmap-x: -126px; transform: rotate(45deg); margin: 5px 0px -5px 0px; }
+.cmap.arrow.upright { --cmap-x: -192px; transform: rotate(45deg); margin: 0px 5px 5px 5px; }
+
+
+.cmap.lstick {
+    background-image: url('/static/images/ameba/ps-mapping.png');
+    background-repeat: no-repeat;
+    display: inline-block;
+    vertical-align: middle;
+    --scale: 0.9;
+    --sprite-w: 512px;  /* total width of the sprite sheet */
+    --sprite-h: 512px;  /* total height of the sprite sheet */
+    --cmap-w: 64px;     /* default width of control mapping icon */
+    --cmap-h: 64px;     /* default height of control mapping icon */
+    --cmap-x: 0px;      /* x offset in the sprite, set by each icon class */
+    --cmap-y: -192px;      /* y offset in the sprite, set by each icon class */
+}
+
+.cmap.lstick.btn { --cmap-x:0px; --cmap-y:-320px; }
+.cmap.lstick.down { --cmap-x:-64px; --cmap-y:-320px; }
+.cmap.lstick.left { --cmap-x:-126px; --cmap-y:-320px; }
+.cmap.lstick.right { --cmap-x:-192px; --cmap-y:-320px; }
+.cmap.lstick.up { --cmap-x:-256px; --cmap-y:-320px; }
+.cmap.lstick.all { --cmap-x:-320px; --cmap-y:-320px; }
+.cmap.lstick.vertical { --cmap-x:-384px; --cmap-y:-320px; }
+.cmap.lstick.horizontal { --cmap-x:-448px; --cmap-y:-320px; }
+
+.cmap.rstick {
+    background-image: url('/static/images/ameba/ps-mapping.png');
+    background-repeat: no-repeat;
+    display: inline-block;
+    vertical-align: middle;
+    --scale: 0.9;
+    --sprite-w: 512px;  /* total width of the sprite sheet */
+    --sprite-h: 512px;  /* total height of the sprite sheet */
+    --cmap-w: 64px;     /* default width of control mapping icon */
+    --cmap-h: 64px;     /* default height of control mapping icon */
+    --cmap-x: 0px;      /* x offset in the sprite, set by each icon class */
+    --cmap-y: -256px;      /* y offset in the sprite, set by each icon class */
+}
+.cmap.rstick.down { --cmap-x:-64px;  }
+.cmap.rstick.left { --cmap-x:-126px;}
+.cmap.rstick.right { --cmap-x:-192px;  }
+.cmap.rstick.up { --cmap-x:-256px;  }
+.cmap.rstick.all { --cmap-x:-320px;  }
+.cmap.rstick.vertical { --cmap-x:-384px;  }
+.cmap.rstick.horizontal { --cmap-x:-448px;  }
+.cmap.rstick.btn { --cmap-x:0px; --cmap-y:-384px; }
+
+
+.cmap.hold-open { --cmap-x:-40px; --cmap-y:0px; --cmap-w:30px; --cmap-h:60px; margin-right: -10px; margin-bottom: 5px;}
+.cmap.hold-close { --cmap-x:-80px; --cmap-y:0px; --cmap-w:34px; --cmap-h:60px; margin-left: -10px; margin-bottom: 5px;}
+
+/* XBOX  
+    west  = X 
+    south = A
+    east  = B
+    north = Y
+*/
+.cmap.stick.xbox { --cmap-x: 0px; --cmap-y: -180px; }     
+/* colored buttons */
+.cmap.btn-west.xbox { --cmap-x: -40px; --cmap-y: -180px; }   
+.cmap.btn-south.xbox { --cmap-x: -80px; --cmap-y: -180px; }  
+.cmap.btn-east.xbox { --cmap-x: -120px; --cmap-y: -180px; }   
+.cmap.btn-north.xbox { --cmap-x: -160px; --cmap-y: -180px; }  
+/* black button, colored letter */
+.cmap.btn-west.xbox-black { --cmap-x: -40px; --cmap-y: -220px; }   
+.cmap.btn-south.xbox-black { --cmap-x: -80px; --cmap-y: -220px; }  
+.cmap.btn-east.xbox-black { --cmap-x: -120px; --cmap-y: -220px; }   
+.cmap.btn-north.xbox-black { --cmap-x: -160px; --cmap-y: -220px; } 
+
+/* Playstation 
+    west  = square
+    south = cross
+    east  = circle
+    north = triangle
+*/
+.cmap.stick.ps { --cmap-x: -0px; --cmap-y: -140px; }
+
+ 
+.cmap.btn-square, 
+.cmap.btn-west.ps { --cmap-x: -40px; --cmap-y: -140px; }
+
+.cmap.btn-cross,
+.cmap.btn-south.ps { --cmap-x: -80px; --cmap-y: -140px; }
+
+.cmap.btn-circle,
+.cmap.btn-east.ps { --cmap-x: -120px; --cmap-y: -140px; }
+
+.cmap.btn-triangle,
+.cmap.btn-north.ps { --cmap-x: -160px; --cmap-y: -140px; }
+
+/* Nintendo 
+    west  = Y
+    south = B
+    east  = A
+    north = X
+*/
+.cmap.stick.nin { --cmap-x: 0px; --cmap-y: -60px; }
+/* gray button, colored letters */
+.cmap.btn-west.nin { --cmap-x: -40px; --cmap-y: -60px; }
+.cmap.btn-south.nin { --cmap-x: -80px; --cmap-y: -60px; }
+.cmap.btn-east.nin { --cmap-x: -120px; --cmap-y: -60px; }
+.cmap.btn-north.nin { --cmap-x: -160px; --cmap-y: -60px; }
+/* gray button, white letters */
+.cmap.btn-west.nin-white { --cmap-x: -40px; --cmap-y: -100px; }
+.cmap.btn-south.nin-white { --cmap-x: -80px; --cmap-y: -100px; }
+.cmap.btn-east.nin-white { --cmap-x: -120px; --cmap-y: -100px; }
+.cmap.btn-north.nin-white { --cmap-x: -160px; --cmap-y: -100px; }
+
+
