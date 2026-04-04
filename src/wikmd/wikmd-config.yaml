@@ -5,22 +5,22 @@ wikmd_port: 5000
 wikmd_logging: 1
 wikmd_logging_file: "wikmd.log"
 
-git_user: "wikmd"
-git_email: "wikmd@no-mail.com"
+git_user: "jplopez"
+git_email: "eclectic.electric@gmail.com"
 
 main_branch_name: "main"
-sync_with_remote: 0
-remote_url: ""
+sync_with_remote: 1
+remote_url: "https://github.com/jplopez/wikmd.git"
 
 wiki_directory: "wiki"
-wiki_title: "Wiki"
+wiki_title: "Ameba Games Studio"
 homepage: "homepage.md"
 homepage_title: "homepage"
 images_route: "img"
 image_allowed_mime: ["image/gif", "image/jpeg", "image/png", "image/svg+xml", "image/webp"]
 hide_folder_in_wiki: [".obsidian"]
 
-plugins: ["draw", "alerts", "mermaid", "embed-pages", "swagger", "plantuml"]
+plugins: ["draw", "alerts", "mermaid", "embed-pages", "swagger", "plantuml", "cmap", "icon", "tables"]
 plantuml_server_url: "https://www.plantuml.com/plantuml"
 
 protect_edit_by_password: 0
