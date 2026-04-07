@@ -20,7 +20,7 @@ images_route: "img"
 image_allowed_mime: ["image/gif", "image/jpeg", "image/png", "image/svg+xml", "image/webp"]
 hide_folder_in_wiki: [".obsidian"]
 
-plugins: ["draw", "alerts", "mermaid", "embed-pages", "swagger", "plantuml", "cmap", "icon", "tables"]
+plugins: ["draw", "alerts", "mermaid", "embed-pages", "swagger", "plantuml", "cmap", "icon", "tables", "toc", "pagedirectory"]
 plantuml_server_url: "https://www.plantuml.com/plantuml"
 
 protect_edit_by_password: 0

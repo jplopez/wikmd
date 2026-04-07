@@ -1,0 +1,22 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Start wikmd",
+            "type": "shell",
+            "command": "$proc = Get-CimInstance Win32_Process -Filter \"Name='python.exe'\" | Where-Object { $_.CommandLine -like '*wikmd.wiki*' }; if ($proc) { Write-Host 'Stopping running wikmd...' ; Stop-Process -Id $proc.ProcessId -Force ; Start-Sleep -Seconds 1 }; .\\venv\\Scripts\\Activate.ps1 ; python -m wikmd.wiki",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

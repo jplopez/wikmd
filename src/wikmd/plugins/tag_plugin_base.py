@@ -8,13 +8,17 @@ Canonical syntax:
 - variations: dot-separated identifiers after the colon (optional).
 - params    : zero or more key="value" or key='value' pairs (optional).
 
-Subclasses must:
-    1. Set `tag_name`, `name`, `plugname` as class attributes.
-    2. Implement `render(variations, params) -> str`.
+Two rendering modes — implement ONE of:
 
-The base class handles all parsing and wires into `process_md_before_html_convert`,
-which runs before pandoc so quote characters in param values are never mangled
-by pandoc's smart-quote conversion.
+  render(variations, params) -> str
+      Runs BEFORE pandoc. Use for tags whose output only depends on the tag
+      arguments (e.g. icons, sprites). This is the common case.
+
+  render_html(page_html, variations, params) -> str
+      Runs AFTER pandoc. Use for tags whose output depends on the rendered
+      HTML content of the page (e.g. Table of Contents that scans headings).
+      The base class automatically emits a placeholder pre-pandoc and
+      replaces it with the result of render_html() in process_before_cache_html.
 """
 
 import re
@@ -180,6 +184,8 @@ class TagPluginBase:
     name: str = ""
     plugname: str = ""
 
+    debug: bool = True
+    
     def __init__(self, flask_app: Flask, config: WikmdConfig, web_dep):
         self.flask_app = flask_app
         self.config = config
@@ -189,27 +195,29 @@ class TagPluginBase:
         return self.name
 
     def process_md_before_html_convert(self, md: str) -> str:
-        """
-        Finds all [[tag_name:...]] occurrences and replaces them via render().
-        Runs before pandoc to prevent smart-quote mangling of param values.
-        """
+        """Replaces all [[tag_name:...]] occurrences with render() output."""
+        self._log('process_md_before_html_convert')
         tag = re.escape(self.tag_name)
-        # Group 1: variations string  (e.g. "stick.nin")  — optional
-        # Group 2: parameters string  (e.g. 'label="foo"') — optional
         pattern = rf'\[\[{tag}(?::([^\s\[\]]*))?\s*(.*?)\s*\]\]'
+        self._log(f'tag: {tag}')
+        self._log(f'pattern: {pattern}')
 
         def _replace(match) -> str:
             variations = TagVariations(match.group(1) or "")
             params = TagParams(match.group(2) or "")
+            self._log('calling render:')
+            self._log(f'  variations {variations}')
+            self._log(f'  params {params}')
             return self.render(variations, params)
 
         return re.sub(pattern, _replace, md)
 
     def render(self, variations: TagVariations, params: TagParams) -> str:
-        """
-        Subclasses implement this to produce the HTML replacement string.
-        Receives the parsed variations and params for the matched tag.
-        """
+        """Implement in subclass to produce the HTML string for a matched tag."""
         raise NotImplementedError(
-            f"TagPlugin '{self.tag_name}' must implement render(variations, params)"
+            f"TagPlugin '{self.tag_name}' must implement render()"
         )
+    
+    def _log(self, message: str):
+      if self.debug:  
+        print(f'TagPlugin {self.tag_name} - {message}')
