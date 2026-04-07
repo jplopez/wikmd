@@ -3,45 +3,51 @@ import re
 
 from flask import Flask, request
 from wikmd.config import WikmdConfig
-
-_PLACEHOLDER = '<div class="wikmd-pagedirectory-placeholder"></div>'
-_PLACEHOLDER_RE = re.compile(r'<div class="wikmd-pagedirectory-placeholder"></div>')
+from wikmd.plugins.tag_plugin_base import TagPluginBase, TagVariations, TagParams
 
 
-class Plugin:
+# Class-only placeholder — survives pandoc and lxml.clean_html intact.
+# Loose regex handles any whitespace pandoc may insert inside the empty div.
+_PLACEHOLDER_RE = re.compile(r'<div class="wikmd-pd"[^>]*>\s*</div>', re.DOTALL)
+_DIV_TAG_CLOSE = '</div>'
+
+class Plugin(TagPluginBase):
+    tag_name = "pagedirectory"
+    name     = "Page Directory"
+    plugname = "pagedirectory"
+
+    # html tags 
+    _tag_wrapper_open = '<div class="wikmd-page-dir card mb-4" aria-label="Page Directory">'
+    _tag_wrapper_close = _DIV_TAG_CLOSE
+    _tag_head_open = '<div class="card-header fw-bold">'
+    _tag_head_inner = 'Pages'
+    _tag_head_close = _DIV_TAG_CLOSE
+    _tag_body_open = '<div class="card-body py-2">'
+    _tab_body_close = _DIV_TAG_CLOSE
+    _tag_list_open = '<ul class="list-group ms-3 mb-0">'
+    _tag_list_close = '</ul>'
+    _tag_item_open = '<li class="list-group-item">'
+    _tag_item_close = '</li>'
+
     def __init__(self, flask_app: Flask, config: WikmdConfig, web_dep):
-        self.name = "Page Directory"
-        self.plugname = "pagedirectory"
-        self.flask_app = flask_app
-        self.config = config
-        self.web_dep = web_dep
+        super().__init__(flask_app, config, web_dep)
 
-    def get_plugin_name(self) -> str:
-        return self.name
+    def render(self, variations: TagVariations, params: TagParams) -> str:
+        """
+        Pre-pandoc: emit a class-only placeholder.
+        
+        Captures params: title
+        """
+        self._tag_head_inner = 'Pages'
+        if params.get("title"): self._tag_head_inner = params.get("title").value
+        return '<div class="wikmd-pd"></div>'
 
-    # ------------------------------------------------------------------
-    # Step 1: Replace [[PageDirectory]] with an HTML placeholder before
-    # pandoc so pandoc passes it through unchanged.
-    # ------------------------------------------------------------------
-    def process_md_before_html_convert(self, md: str) -> str:
-        return re.sub(
-            r'\[\[\s*PageDirectory\s*\]\]',
-            _PLACEHOLDER,
-            md,
-            flags=re.IGNORECASE
-        )
-
-    # ------------------------------------------------------------------
-    # Step 2: Resolve the placeholder at request time.
-    # Uses request.path to find the current page's sub-folder.
-    # Runs every request so newly added pages appear immediately.
-    # ------------------------------------------------------------------
     def process_html(self, html: str) -> str:
-        if _PLACEHOLDER not in html:
+        """Runs every request so newly added pages appear immediately."""
+        if not _PLACEHOLDER_RE.search(html):
             return html
-
         tree_html = self._build_directory(request.path)
-        return html.replace(_PLACEHOLDER, tree_html)
+        return _PLACEHOLDER_RE.sub(lambda _: tree_html, html)
 
     # ------------------------------------------------------------------
     # Internal helpers
@@ -78,10 +84,10 @@ class Plugin:
             )
 
         return (
-            '<nav class="wikmd-page-dir card mb-4" aria-label="Page Directory">\n'
-            '  <div class="card-header fw-bold">Pages</div>\n'
-            f'  <div class="card-body py-2">{tree}</div>\n'
-            '</nav>'
+            f'{self._tag_wrapper_open}\n'
+            f'  {self._tag_head_open} {self._tag_head_inner} {self._tag_head_close} \n'
+            f'   {self._tag_body_open} {tree} {self._tag_body_open} \n'
+            f'{self._tag_wrapper_close}'
         )
 
     def _walk(self, fs_path: str, base_url: str) -> str:
@@ -101,7 +107,7 @@ class Plugin:
                 if subtree:
                     items.append(
                         f'<li>'
-                        f'<span class="fw-semibold">{entry.name}/</span>'
+                        f'<span class="bi bi-folder fw-semibold">{entry.name}/</span>'
                         f'{subtree}'
                         f'</li>'
                     )
@@ -109,9 +115,13 @@ class Plugin:
             elif entry.is_file() and entry.name.lower().endswith('.md'):
                 page_name = entry.name[:-3]                       # strip .md
                 url = f'{base_url}/{page_name}'
-                items.append(f'<li><a href="{url}">{page_name}</a></li>')
+                items.append(f'<li>'
+                             f'  <a href="{url}">'
+                             f'    <span class="bi bi-file-text-fill fw-semibold">{page_name}</span>'
+                             '  </a>'
+                             '</li>')
 
         if not items:
             return ''
 
-        return '<ul class="list-unstyled ms-3 mb-0">' + ''.join(items) + '</ul>'
+        return self._tag_list_open + ''.join(items) + self._tag_list_close

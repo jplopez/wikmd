@@ -210,7 +210,7 @@ class TagPluginBase:
             self._log(f'  params {params}')
             return self.render(variations, params)
 
-        return re.sub(pattern, _replace, md)
+        return re.sub(pattern, _replace, md, flags=re.IGNORECASE)
 
     def render(self, variations: TagVariations, params: TagParams) -> str:
         """Implement in subclass to produce the HTML string for a matched tag."""
