@@ -100,7 +100,15 @@ WEB_DEPENDENCIES = {
     "swagger-ui.css": WebDependency(
         local="/static/css/swagger-ui.css",
         external="https://unpkg.com/swagger-ui-dist@4.5.0/swagger-ui.css"
-    )
+    ),
+    "easymde.min.css": WebDependency(
+        local="/static/css/easymde.min.css",
+        external="https://unpkg.com/easymde/dist/easymde.min.css"
+    ),
+    "easymde.min.js": WebDependency(
+        local="/static/js/easymde.min.js",
+        external="https://unpkg.com/easymde/dist/easymde.min.js"
+    ),
 }
 
 

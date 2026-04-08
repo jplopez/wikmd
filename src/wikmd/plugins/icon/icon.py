@@ -16,8 +16,10 @@ class Plugin(TagPluginBase):
 
     def render(self, variations: TagVariations, params: TagParams) -> str:
         """
-        [[icon:alarm]]                                    → <i class="bi bi-alarm">
-        [[icon:alarm size="2rem" color="cornflowerblue"]] → with inline style
+        [[icon:alarm]]
+            → <i class="bi bi-alarm">
+        [[icon:alarm size="2rem" color="cornflowerblue"]] 
+            → with inline style
         The icon name is the first (and typically only) variation.
         """
         icon = variations.get(0, "")
@@ -30,6 +32,7 @@ class Plugin(TagPluginBase):
         if color_param:
             style_parts.append(f"color: {color_param.value}")
 
-        style_attr = f" style=\"{'; '.join(style_parts)}\"" if style_parts else ""
-
-        return f"<i class=\"bi bi-{icon}\"{style_attr} role=\"img\" aria-label=\"{icon}\" title=\"{icon}\"></i>"
+        style_attr = f' style="{'; '.join(style_parts)}"' if style_parts else ''
+        ret = f'<i class="bi bi-{icon}"{style_attr} role="img" aria-label="{icon}" title="{icon}"></i>'
+        self._log("returned html: " + ret)
+        return ret

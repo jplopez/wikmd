@@ -21,7 +21,12 @@ from flask import (
     send_from_directory,
     url_for,
 )
-from lxml.html.clean import clean_html
+from lxml.html.clean import Cleaner
+
+# Extend the default safe-attr list to preserve style, role, aria-*, and data-* attrs
+# that plugins emit. safe_attrs_only=False disables the attribute allowlist entirely,
+# which is appropriate for a personal wiki with trusted content.
+_html_cleaner = Cleaner(safe_attrs_only=False)
 from werkzeug.utils import safe_join
 from wikmd import knowledge_graph
 from wikmd.cache import Cache
@@ -212,7 +217,7 @@ def get_html(file_page):
                                     format='md', extra_args=["--mathjax"], filters=[])
 
     if html.strip():
-        html = clean_html(html)
+        html = _html_cleaner.clean_html(html)
 
     for plugin in plugins:
         if "process_before_cache_html" in dir(plugin):
@@ -352,6 +357,7 @@ def add_new():
             upload_path=cfg.images_route,
             image_allowed_mime=cfg.image_allowed_mime,
             title=page_name,
+            can_edit=True,
             system=SYSTEM_SETTINGS
         )
 
@@ -380,6 +386,7 @@ def edit_homepage():
             title=cfg.homepage_title,
             upload_path=cfg.images_route,
             image_allowed_mime=cfg.image_allowed_mime,
+            can_edit=True,
             system=SYSTEM_SETTINGS
         )
 
@@ -429,6 +436,7 @@ def edit(page):
                 title=page,
                 upload_path=cfg.images_route,
                 image_allowed_mime=cfg.image_allowed_mime,
+                can_edit=True,
                 system=SYSTEM_SETTINGS
             )
         else:
@@ -439,6 +447,7 @@ def edit(page):
                 title=page,
                 upload_path=cfg.images_route,
                 image_allowed_mime=cfg.image_allowed_mime,
+                can_edit=True,
                 system=SYSTEM_SETTINGS
             )
 

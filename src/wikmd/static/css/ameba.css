@@ -188,3 +188,4 @@
 .cmap.btn-north.nin-white { --cmap-x: -160px; --cmap-y: -100px; }
 
 
+.editor-toolbar button.table { width: auto;}

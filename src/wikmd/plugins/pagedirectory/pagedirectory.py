@@ -23,7 +23,7 @@ class Plugin(TagPluginBase):
     _tag_head_inner = 'Pages'
     _tag_head_close = _DIV_TAG_CLOSE
     _tag_body_open = '<div class="card-body py-2">'
-    _tab_body_close = _DIV_TAG_CLOSE
+    _tag_body_close = _DIV_TAG_CLOSE
     _tag_list_open = '<ul class="list-group ms-3 mb-0">'
     _tag_list_close = '</ul>'
     _tag_item_open = '<li class="list-group-item">'
@@ -66,7 +66,7 @@ class Plugin(TagPluginBase):
 
         # Prefer: a folder with the exact same name as the page
         target_fs = os.path.join(wiki_dir, page_path)
-        base_url = '/' + page_path
+        base_url = ('/' + page_path) if page_path else ''
 
         if not os.path.isdir(target_fs):
             # Fallback: parent directory (shows siblings)
@@ -86,7 +86,7 @@ class Plugin(TagPluginBase):
         return (
             f'{self._tag_wrapper_open}\n'
             f'  {self._tag_head_open} {self._tag_head_inner} {self._tag_head_close} \n'
-            f'   {self._tag_body_open} {tree} {self._tag_body_open} \n'
+            f'   {self._tag_body_open} {tree} {self._tag_body_close} \n'
             f'{self._tag_wrapper_close}'
         )
 
@@ -107,7 +107,7 @@ class Plugin(TagPluginBase):
                 if subtree:
                     items.append(
                         f'<li>'
-                        f'<span class="bi bi-folder fw-semibold">{entry.name}/</span>'
+                        f'<span class="bi bi-folder fw-semibold"> {entry.name}/</span>'
                         f'{subtree}'
                         f'</li>'
                     )
@@ -115,7 +115,7 @@ class Plugin(TagPluginBase):
             elif entry.is_file() and entry.name.lower().endswith('.md'):
                 page_name = entry.name[:-3]                       # strip .md
                 url = f'{base_url}/{page_name}'
-                items.append(f'<li>'
+                items.append(f'<li> '
                              f'  <a href="{url}">'
                              f'    <span class="bi bi-file-text-fill fw-semibold">{page_name}</span>'
                              '  </a>'
