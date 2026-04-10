@@ -23,6 +23,14 @@ To view the documents in the browser, the document is converted to html.
 - codemirror for editing
 - password protection
 
+**More Features** (added by @jplopez)
+- Table of Contents
+- Improved tables: borders, stripe format, hover color
+- page directory: tag to include the all child pages from the current one
+- Control mapping buttons: tags to include controller buttons to document input controls
+- EasyMD for editing: adds a toolbar with shortcuts to rich text, lists, tables, side-by-side view, undo/redo
+- Bootstrap components: toolbar on editor to insert commonly used bootstrap components (cards, accordions, list groups, alerts, etc).
+
 
 [Using the wiki](https://linbreux.github.io/wikmd/Using%20the%20wiki.html)
 
