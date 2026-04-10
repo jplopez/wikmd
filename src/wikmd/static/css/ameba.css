@@ -189,3 +189,20 @@
 
 
 .editor-toolbar button.table { width: auto;}
+
+
+.btn .wikimd-toc {
+
+}
+
+/* edit page bottom canvas - Save changes */
+#saveOffcanvas.offcanvas { height: 10vh; min-height: 75px; }
+
+.vertical-divider {
+    width: 0;
+    height: 100%;
+    margin: 0 .5rem;
+    overflow: hidden;
+    border-left: 1px solid ;
+    border-color: rgba(0, 0, 0, .15); 
+}

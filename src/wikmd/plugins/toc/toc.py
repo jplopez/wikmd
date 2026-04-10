@@ -1,4 +1,5 @@
 import re
+import sys
 
 from flask import Flask
 from wikmd.config import WikmdConfig
@@ -16,8 +17,10 @@ class Plugin(TagPluginBase):
     
     DIV_TAG_CLOSE = '</div>'
     # html tags
-    _tag_button = '<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasToc" aria-controls="offcanvasToc"><i class="bi bi-list-ol"></i> Table of Contents</button>'
-    _tag_wrapper_open = '<div class="offcanvas offcanvas-start"  data-bs-scroll="true" tabindex="-1" id="offcanvasToc" aria-labelledby="offcanvasTocLabel">'
+    _tag_button = '<button class="btn btn-outline-primary wikimd-toc" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasToc" aria-controls="offcanvasToc"><i class="bi bi-list-ol"></i> Table of Contents</button>'
+
+    
+    _tag_wrapper_open = '<div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasToc" aria-labelledby="offcanvasTocLabel">'
     _tag_wrapper_close = DIV_TAG_CLOSE
   
     _tag_head_open = '<div class="offcanvas-header">'
@@ -27,6 +30,7 @@ class Plugin(TagPluginBase):
     _tag_body_open = '<div class="offcanvas-body">'
     _tag_body_close = DIV_TAG_CLOSE
     
+    _darktheme = False
     
     def __init__(self, flask_app: Flask, config: WikmdConfig, web_dep):
         super().__init__(flask_app, config, web_dep)
@@ -35,6 +39,7 @@ class Plugin(TagPluginBase):
         """Pre-pandoc: emit a simple placeholder. Depth is in the class name."""
         depth_param = params.get("depth")
         depth = depth_param.value if depth_param else "6"
+        
         return f'<div class="wikmd-toc-d{depth}"></div>'
 
     def process_before_cache_html(self, html: str) -> str:
@@ -42,6 +47,9 @@ class Plugin(TagPluginBase):
         def replace_match(m):
             max_depth = int(m.group(1))
             return self._build_toc(html, max_depth) or ""
+
+        wiki_mod = sys.modules.get('wikmd.wiki') or sys.modules.get('__main__')
+        print(f"before_cache_html {wiki_mod}")
 
         return _PLACEHOLDER_RE.sub(replace_match, html)
 
@@ -78,6 +86,7 @@ class Plugin(TagPluginBase):
             lines.append('</li></ol>')
 
         inner = '\n'.join(lines)
+        
         return (
             f'{self._tag_button}\n'
             f'{self._tag_wrapper_open}\n'

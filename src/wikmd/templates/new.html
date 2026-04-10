@@ -27,8 +27,15 @@
             <textarea class="form-control hidden" id="content" rows="25" name="CT">{{content}}</textarea>
         </div>
         <input type="file" name="pageFormInput" title="Input field for uploaded files" multiple>
-        <p id="messages"></p>
-        <button type="submit" class="btn btn-success mb-2">Save</button>
+
+        <div id="saveOffcanvas" aria-labelledby="saveChangesButton" 
+            class="offcanvas offcanvas-bottom show bg-secondary bg-opacity-10 border-top border-secondary" 
+            data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" >
+            <div class="offcanvas-body container">
+                <p id="messages"></p>
+                <button id="saveChangesButton" aria-label="Save Changes" type="submit" class="btn btn-success mb-2" title="Save Changes">Save</button>
+            </div>
+        </div>
     </form>
 
     <script type="text/javascript" src="{{ system.web_deps["easymde.min.js"] }}"></script>
