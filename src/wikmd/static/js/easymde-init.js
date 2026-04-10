@@ -45,9 +45,6 @@
     /** Extension registry – populated by the page before initWikmdEditor(). */
     window.wikmdEditorExtensions = window.wikmdEditorExtensions || [];
 
-    /** Dropdown configs collected while the toolbar array is being assembled. */
-    var _pendingDropdowns = [];
-
     /**
      * Create and mount the EasyMDE editor.
      *
@@ -122,180 +119,23 @@
             return msg;
         });
 
-        // --- Inject dropdown DOM into the toolbar -------------------------
-        if (_pendingDropdowns.length) {
-            var editorToolbar = editor.codemirror.getWrapperElement()
-                                      .parentElement
-                                      .querySelector(".editor-toolbar");
-            _injectDropdowns(editor, editorToolbar);
-            _pendingDropdowns = [];
-        }
-
-        // Mark body so CSS can target dark-mode dropdown styles
+        // Mark body so CSS can target dark-mode styles
         if (options.darkTheme) {
             document.body.setAttribute("data-wikmd-theme", "dark");
         }
 
-        // Close any open dropdown when clicking outside the toolbar
-        document.addEventListener("click", function (e) {
-            var open = document.querySelectorAll(".wikmd-toolbar-dropdown.show");
-            open.forEach(function (m) {
-                if (!m.parentElement.contains(e.target)) {
-                    m.classList.remove("show");
-                }
-            });
-        });
-
         // Expose for debugging / external scripts
         window._wikmdEditor = editor;
-    };
 
-    // ─── Toolbar Dropdown Helper ──────────────────────────────────────────────
-    //
-    // Usage (inside an extension's toolbar() callback):
-    //
-    //   wikmdToolbarDropdown({
-    //     name:      "my-dropdown",      // unique; becomes the button's [name] attr
-    //     title:     "Insert component", // tooltip
-    //     className: "bi bi-layout-text-window-reverse",
-    //     items: [
-    //       { label: "Group", children: [
-    //           { label: "Item A", snippet: "..." },
-    //           { label: "Dynamic", snippet: function() { return "..." } },
-    //       ]},
-    //       { separator: true },         // plain horizontal divider
-    //       { label: "Top-level item", snippet: "..." },
-    //     ],
-    //   })
-    //
-    //  The dropdown DOM is built once at editor init time and injected into the
-    //  toolbar as a sibling of its trigger button (inside a .wikmd-dd-wrapper).
-    //  Visibility is toggled with the .show CSS class — no absolute positioning
-    //  hacks or document.body appends needed.
-    //
-    window.wikmdToolbarDropdown = function (options) {
-        // Register for post-init DOM injection
-        _pendingDropdowns.push(options);
-
-        return {
-            name:      options.name,
-            title:     options.title,
-            className: options.className,
-            // EasyMDE calls action() when the button is clicked.
-            // At that point the DOM is already injected; just toggle .show.
-            action: function (editor) {
-                var cmWrapper = editor.codemirror.getWrapperElement();
-                var eToolbar  = cmWrapper.parentElement
-                                         .querySelector(".editor-toolbar");
-                var btn = eToolbar
-                    ? eToolbar.querySelector("button[name=\"" + options.name + "\"]")
-                    : null;
-                if (!btn) return;
-                var menu = btn.parentElement.querySelector(".wikmd-toolbar-dropdown");
-                if (!menu) return;
-
-                // Close every other open dropdown first
-                document.querySelectorAll(".wikmd-toolbar-dropdown.show").forEach(function (m) {
-                    if (m !== menu) m.classList.remove("show");
-                });
-
-                menu.classList.toggle("show");
-            },
-        };
-    };
-
-    /**
-     * Walk _pendingDropdowns, find each trigger button in the rendered toolbar,
-     * wrap it in .wikmd-dd-wrapper, and append the pre-built menu inside.
-     */
-    function _injectDropdowns(editor, toolbar) {
-        _pendingDropdowns.forEach(function (options) {
-            var btn = toolbar
-                ? toolbar.querySelector("button[name=\"" + options.name + "\"]")
-                : null;
-            if (!btn) return;
-
-            // Wrap button so the dropdown can be position:absolute relative to it
-            var wrapper = document.createElement("span");
-            wrapper.className = "wikmd-dd-wrapper";
-            btn.parentNode.insertBefore(wrapper, btn);
-            wrapper.appendChild(btn);
-
-            var menu = _buildMenu(editor, options.items);
-            wrapper.appendChild(menu);
-        });
-    }
-
-    function _buildMenu(editor, items) {
-        var menu = document.createElement("div");
-        menu.className = "wikmd-toolbar-dropdown";
-
-        (items || []).forEach(function (item) {
-
-            // Plain divider line
-            if (item.separator && !item.children) {
-                var sep = document.createElement("div");
-                sep.className = "wikmd-dd-sep";
-                menu.appendChild(sep);
-                return;
-            }
-
-            // Group item — has children that open as a flyout submenu on hover
-            if (item.children) {
-                var group = document.createElement("div");
-                group.className = "wikmd-dd-group";
-
-                var groupBtn = document.createElement("button");
-                groupBtn.type = "button";
-                groupBtn.className = "wikmd-dd-group-btn";
-                groupBtn.innerHTML = _esc(item.label)
-                    + "<span class=\"wikmd-dd-arrow\" aria-hidden=\"true\">&#9654;</span>";
-                group.appendChild(groupBtn);
-
-                var submenu = _buildMenu(editor, item.children);
-                submenu.className += " wikmd-dd-submenu";
-                group.appendChild(submenu);
-
-                // On hover choose left or right direction based on available space
-                group.addEventListener("mouseenter", function () {
-                    var pRect = menu.getBoundingClientRect();
-                    var fits  = (pRect.right + (submenu.offsetWidth || 220)) <= window.innerWidth;
-                    submenu.classList.toggle("wikmd-dd-submenu-left", !fits);
-                });
-
-                menu.appendChild(group);
-                return;
-            }
-
-            // Leaf action item
-            var btn = document.createElement("button");
-            btn.type = "button";
-            btn.textContent = item.label || "";
-            btn.addEventListener("click", function (e) {
-                e.stopPropagation();
-                // Close all open menus (use .show class approach)
-                document.querySelectorAll(".wikmd-toolbar-dropdown.show").forEach(function (m) {
-                    m.classList.remove("show");
-                });
-                editor.codemirror.focus();
-                var snippet = typeof item.snippet === "function" ? item.snippet() : (item.snippet || "");
-                editor.codemirror.getDoc().replaceSelection(snippet);
+        // Run afterInit extensions (only when editing is enabled)
+        if (canEdit) {
+            window.wikmdEditorExtensions.forEach(function (ext) {
+                if (typeof ext.afterInit === "function") {
+                    ext.afterInit(editor);
+                }
             });
-            menu.appendChild(btn);
-        });
-
-        return menu;
-    }
-
-    function _esc(str) {
-        return String(str)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;");
-    }
-
-    // -------------------------------------------------------------------------
+        }
+    };
 
     function _submitAsync(editor) {
         document.getElementById("content").value = editor.value();

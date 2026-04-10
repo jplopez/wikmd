@@ -1,122 +1,64 @@
 /* ── EasyMDE custom styles ──────────────────────────────────────────────────── */
 
-/* ── Toolbar dropdown wrapper ────────────────────────────────────────────────
-   Each dropdown trigger button is wrapped in this span so the menu can be
-   positioned absolutely relative to it (no body-append needed).           */
+/* ── Second toolbar row (Bootstrap components) ──────────────────────────────── */
 
-.wikmd-dd-wrapper {
-    position: relative;
-    display:  inline-block;
+.wikmd-components-toolbar {
+    display:     flex;
+    align-items: center;
+    flex-wrap:   wrap;
+    gap:         2px;
+    font-size:   0.82rem;
+    line-height: 1;
 }
 
-/* ── Toolbar dropdown menu ─────────────────────────────────────────────────── */
-
-.wikmd-toolbar-dropdown {
-    display:  none;           /* hidden by default; .show makes it visible   */
-    position: absolute;
-    top:      100%;           /* directly below the trigger button           */
-    left:     0;
-    z-index:  9999;
-    background:    #fff;
-    border:        1px solid #dee2e6;
-    border-radius: 6px;
-    box-shadow:    0 4px 16px rgba(0, 0, 0, .14);
-    min-width:     200px;
-    padding:       4px 0;
-    font-size:     0.875rem;
-    font-family:   inherit;
-}
-
-.wikmd-toolbar-dropdown.show {
-    display: block;
-}
-
-/* Leaf action buttons */
-.wikmd-toolbar-dropdown > button {
-    display:     block;
-    width:       100%;
+.wikmd-ct-btn {
+    display:     inline-flex;
+    align-items: center;
+    gap:         4px;
     background:  none;
-    border:      none;
-    text-align:  left;
-    padding:     6px 16px;
+    border:      1px solid transparent;
+    border-radius: 3px;
+    padding:     3px 7px;
     cursor:      pointer;
-    color:       inherit;
+    font-size:   inherit;
+    font-family: inherit;
+    color:       #444;
     white-space: nowrap;
-    line-height: 1.5;
+    line-height: 1.4;
 }
-.wikmd-toolbar-dropdown > button:hover {
-    background: #eef2ff;
+.wikmd-ct-btn:hover {
+    background:   rgba(0, 0, 0, 0.07);
+    border-color: #bbb;
 }
-
-/* Plain divider */
-.wikmd-dd-sep {
-    border-top: 1px solid #dee2e6;
-    margin:     4px 0;
-}
-
-/* ── Nested submenu group ───────────────────────────────────────────────────── */
-
-.wikmd-dd-group {
-    position: relative;
+.wikmd-ct-btn i {
+    margin-right: 3px;
+    font-size: 1rem;
 }
 
-.wikmd-dd-group-btn {
-    display:         flex;
-    align-items:     center;
-    justify-content: space-between;
-    width:           100%;
-    background:      none;
-    border:          none;
-    text-align:      left;
-    padding:         6px 16px;
-    cursor:          default;
-    color:           inherit;
-    white-space:     nowrap;
-    line-height:     1.5;
-    font-size:       inherit;
-    font-family:     inherit;
-}
-.wikmd-dd-group:hover > .wikmd-dd-group-btn {
-    background: #eef2ff;
-}
-
-.wikmd-dd-arrow {
-    font-size:   0.6rem;
-    margin-left: 16px;
-    opacity:     0.55;
-}
-
-/* Submenu — CSS-only hover reveal, positioned to the right of its group row */
-.wikmd-dd-submenu {
-    display:  none;
-    position: absolute;
-    top:      -5px;
-    left:     100%;
-    right:    auto;
-}
-.wikmd-dd-submenu.wikmd-dd-submenu-left {
-    left:  auto;
-    right: 100%;
-}
-.wikmd-dd-group:hover > .wikmd-dd-submenu {
-    display: block;
+.wikmd-ct-sep {
+    display:    inline-block;
+    width:      1px;
+    height:     20px;
+    background: #aaa;
+    margin:     0 6px;
+    flex-shrink: 0;
 }
 
 /* ── Dark theme ─────────────────────────────────────────────────────────────── */
 
-body[data-wikmd-theme="dark"] .wikmd-toolbar-dropdown {
-    background:   #1e2130;
-    border-color: #3a3f5c;
-    color:        #cbccc6;
-}
-
-body[data-wikmd-theme="dark"] .wikmd-toolbar-dropdown > button:hover,
-body[data-wikmd-theme="dark"] .wikmd-dd-group:hover > .wikmd-dd-group-btn {
-    background: #2a2f4a;
-}
-
-body[data-wikmd-theme="dark"] .wikmd-dd-sep {
+body[data-wikmd-theme="dark"] .wikmd-components-toolbar {
+    background:  #1e2130;
     border-color: #3a3f5c;
 }
 
+body[data-wikmd-theme="dark"] .wikmd-ct-btn {
+    color: #cbccc6;
+}
+body[data-wikmd-theme="dark"] .wikmd-ct-btn:hover {
+    background:   #2a2f4a;
+    border-color: #3a3f5c;
+}
 
+body[data-wikmd-theme="dark"] .wikmd-ct-sep {
+    background: #3a3f5c;
+}
