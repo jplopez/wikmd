@@ -1,6 +1,9 @@
 # pycharm IDE config folder
 .idea/
 
+# vscode IDE
+.vscode
+
 # Log files
 *.log
 
